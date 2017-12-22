@@ -1,0 +1,87 @@
+spring:
+  datasource:
+    type : com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/artviewer_gallery?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: root
+#  初始化大小，最小，最大
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+#  配置获取连接等待超时时间
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    filters: stat,wall,log4j  #'wall'用于防火墙
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000 # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    cachePrepStmts: true  # 开启二级缓存
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss   # H 24小时
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  http:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  mvc:
+    servlet:
+      load-on-startup: 1
+  redis:
+    database: 3
+    host: localhost
+    password:
+    port: 6379
+    timeout: 0   #链接超时时间
+    pool:
+               max-active: 8
+               max-wait: -1
+               max-idle: 8
+               min-idle: 0
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    cache: true
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+    request-context-attribute: request
+mybatis:
+  mapper-locations: classpath:/mybatis-mappers/*
+  #开启MyBatis的二级缓存
+  configuration:
+    cache-enabled: true
+  type-aliases-package: cn.knowsbox.model
+logging:
+  config: classpath:logback-knowsbox.xml
+log:
+  level:
+    root: info
+    my: debug
+  file: logs/knowsbox.log
+  maxsize: 30MB
+token:
+  expire:
+    seconds: 86400
+server:
+  port: 8086
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+
+

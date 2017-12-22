@@ -1,0 +1,19 @@
+<!-- 安全认证过滤器 -->
+<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <property name="securityManager" ref="securityManager" />
+    <property name="loginUrl" value="/b/login" />
+    <property name="successUrl" value="/b" />
+    <property name="filters">
+        <map>
+            <!--退出过滤器-->
+            <entry key="logout" value-ref="systemLogoutFilter" />
+        </map>
+    </property>
+    <property name="filterChainDefinitions">
+        <value>
+            /b/login = authc
+            /b/logout = logout
+            /b/** = user
+        </value>
+    </property>
+</bean>
